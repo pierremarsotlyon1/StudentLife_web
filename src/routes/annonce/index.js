@@ -2,15 +2,12 @@
  * Created by pierremarsot on 25/03/2017.
  */
 const rootRoute = {
-  path: '/',
+  path: '/annonces',
 
   getChildRoutes(partialNextState, callback) {
     require.ensure([], function (require) {
       callback(null, [
-        require('./login/index').default,
-        require('./register/index').default,
-        require('./dashboard/index').default,
-        require('./annonce/index').default,
+        require('./add/index').default,
       ]);
     })
   },
@@ -18,14 +15,14 @@ const rootRoute = {
   getIndexRoute(partialNextState, callback) {
     require.ensure([], function (require) {
       callback(null, {
-        component: require('../components/home/Home').default,
+        component: require('../../components/annonce/AnnonceList').default,
       });
     })
   },
 
   getComponents(nextState, callback) {
     require.ensure([], function (require) {
-      callback(null, require('../containers/layout/App').default);
+      callback(null, require('../../containers/annonce/Annonce').default);
     })
   }
 };

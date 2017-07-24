@@ -4,6 +4,8 @@ import {createLogger} from 'redux-logger';
 
 import auth from '../reducers/auth';
 import toast from '../reducers/toast';
+import entreprise from '../reducers/entreprise';
+import annonce from '../reducers/annonce';
 
 import reduxReset from 'redux-reset'
 
@@ -11,7 +13,9 @@ const logger = createLogger();
 const rootReducer = combineReducers(
   {
     auth,
-    toast
+    toast,
+    entreprise,
+    annonce,
   }
 );
 

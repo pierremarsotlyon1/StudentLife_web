@@ -2,7 +2,7 @@ html, body {
     margin: 0;
 }
 
-.menu-appbar a {
+.menu-appbar a, .link {
     color: #ffffff;
     text-decoration: none;
 }
