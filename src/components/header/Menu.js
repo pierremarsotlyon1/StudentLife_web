@@ -9,14 +9,19 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Link from 'react-router/lib/Link';
+import PowerSettingsNew from 'material-ui-icons/PowerSettingsNew';
+import {logout} from '../../actions/auth';
 
 class Menu extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  handleLogout = () => {
+    this.props.dispatch(logout());
+  };
 
   render() {
     const {token, classes} = this.props;
@@ -37,7 +42,7 @@ class Menu extends React.Component {
           </Button>
         </div>
     } else {
-      <div className="menu-appbar-right">
+      rightMenu = <div className="menu-appbar-right">
         <Button color="contrast">
           <Link to="/dashboard">
             Mon compte
@@ -48,10 +53,13 @@ class Menu extends React.Component {
             Mes annonces
           </Link>
         </Button>
-        <IconButton color="primary" className={classes.button} aria-label="Add to shopping cart">
-          <Link to="/annonces">
-            Mes annonces
-          </Link>
+        <IconButton
+          color="primary"
+          className={classes.button}
+          aria-label="Logout"
+          onClick={() => this.handleLogout()}
+        >
+          <PowerSettingsNew/>
         </IconButton>
       </div>
     }

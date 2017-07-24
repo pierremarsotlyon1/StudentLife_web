@@ -2,10 +2,13 @@
  * Created by pierremarsot on 24/07/2017.
  */
 import {postApi} from '../tools/api';
+import {setLocalStorage, ID_TOKEN} from '../tools/localStorage';
 import {sendMessageError, sendMessageSuccess} from './toast';
 
 export const LOGIN_ENTREPRISE_SUCCESS = 'LOGIN_ENTREPRISE_SUCCESS';
 export const LOGIN_ENTREPRISE_ERROR = 'LOGIN_ENTREPRISE_ERROR';
+
+export const LOG_OUT = 'LOG_OUT';
 
 export const REGISTER_ENTREPRISE_SUCCESS = 'REGISTER_ENTREPRISE_SUCCESS';
 export const REGISTER_ENTREPRISE_ERROR = 'REGISTER_ENTREPRISE_ERROR';
@@ -40,6 +43,9 @@ export function loginEntreprise(email, password) {
       password: password,
     })
       .then((response) => {
+        if (response && response.token) {
+          setLocalStorage(ID_TOKEN, response.token);
+        }
         return dispatch(loginEntrepriseSuccess(response));
       })
       .catch((response) => {
@@ -99,6 +105,9 @@ export function registerEntreprise(nomEntreprise, email, password, confirmPasswo
       confirm_password: confirmPassword,
     })
       .then((response) => {
+        if (response && response.token) {
+          setLocalStorage(ID_TOKEN, response.token);
+        }
         return dispatch(registerEntrepriseSuccess(response));
       })
       .catch((response) => {
@@ -109,4 +118,12 @@ export function registerEntreprise(nomEntreprise, email, password, confirmPasswo
         return dispatch(registerEntrepriseError());
       });
   }
+}
+
+export function logout() {
+  return dispatch => {
+    return dispatch({
+      type: LOG_OUT,
+    });
+  };
 }

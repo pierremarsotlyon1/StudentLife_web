@@ -4,6 +4,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router'
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -25,7 +26,7 @@ class Register extends React.Component {
     super(props);
 
     if(isConnected()){
-      //Redirect dashboard
+      browserHistory.push('/');
     }
 
     this.state = {
@@ -38,7 +39,7 @@ class Register extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props.token !== nextProps.token && nextProps.token.length > 0){
-      //Redirect dashboard
+      browserHistory.push('/');
     }
   }
 

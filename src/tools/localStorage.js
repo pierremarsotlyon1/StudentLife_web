@@ -1,4 +1,4 @@
-export const ID_TOKEN = 'id_token_coiffure_user';
+export const ID_TOKEN = 'id_token_student_life_lyon1_user';
 export const TYPE_USER = "type_user_getachamp";
 
 export function getToken()

@@ -8,8 +8,8 @@ import {getLocalStorage, ID_TOKEN, getToken} from './localStorage';
 superagentJsonapify(superagent);
 
 const url = process.env.NODE_ENV === "development" ?
-  "http://localhost:1324" :
-  "http://37.187.23.89:78";
+  "http://localhost:1330" :
+  "http://valeriemoroseau.com";
 
 export function get(path, query){
   return new Promise((resolve, reject) => {

@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
+import { browserHistory } from 'react-router'
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -25,7 +26,7 @@ class Login extends React.Component {
     super(props);
 
     if(isConnected()){
-      //Redirect dashboard
+      browserHistory.push('/');
     }
 
     this.state = {
@@ -34,12 +35,18 @@ class Login extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.token !== nextProps.token && nextProps.token.length > 0){
+      browserHistory.push('/');
+    }
+  }
+
   handleEmail = (e) => {
     this.setState({ email: e.target.value });
   };
 
   handlePassword = (e) => {
-    this.setState({ password: event.target.value })
+    this.setState({ password: e.target.value })
   };
 
   handleSubmit = (e) => {
