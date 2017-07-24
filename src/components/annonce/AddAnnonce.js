@@ -53,8 +53,15 @@ class AddAnnonce extends React.Component {
   };
 
   handleReduction = (e) => {
+    let reduction = e.target.value;
+    reduction = Number.parseInt(reduction);
+
+    if(reduction < 0){
+      reduction = 0;
+    }
+
     this.setState({
-      reduction: e.target.value,
+      reduction: reduction,
     });
   };
 

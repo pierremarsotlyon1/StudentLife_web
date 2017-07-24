@@ -83,8 +83,16 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
       return dispatch(addAnnonceError());
     }
 
-    if (reduction) {
+    if (reduction !== undefined) {
       reduction = Number.parseInt(reduction);
+    }
+
+    const momentDateDebut = moment(dateDebut);
+    const momentDateFin = moment(dateFin);
+
+    if(momentDateDebut.isAfter(momentDateFin)){
+      dispatch(sendMessageError('Vous devez saisir une date de début inférieur à celle de fin'));
+      return dispatch(addAnnonceError());
     }
 
     postApi('/api/entreprise/bonsplans', {
