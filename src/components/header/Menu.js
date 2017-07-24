@@ -29,7 +29,7 @@ class Menu extends React.Component {
     let rightMenu;
     if (!token || token.length === 0) {
       rightMenu =
-        <div className="menu-appbar-right">
+        <div>
           <Button color="contrast">
             <Link to="/login">
               Se connecter
@@ -42,7 +42,7 @@ class Menu extends React.Component {
           </Button>
         </div>
     } else {
-      rightMenu = <div className="menu-appbar-right">
+      rightMenu = <div>
         <Button color="contrast">
           <Link to="/dashboard">
             Mon compte
@@ -54,9 +54,9 @@ class Menu extends React.Component {
           </Link>
         </Button>
         <IconButton
-          color="primary"
           className={classes.button}
           aria-label="Logout"
+          color="contrast"
           onClick={() => this.handleLogout()}
         >
           <PowerSettingsNew/>
@@ -67,9 +67,11 @@ class Menu extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.background}>
-          <Toolbar>
+          <Toolbar className="menu-appbar">
             <Typography type="title" color="inherit" className={classes.flex}>
-              Student Life
+              <Link to="/">
+                Student Life
+              </Link>
             </Typography>
             {rightMenu}
           </Toolbar>

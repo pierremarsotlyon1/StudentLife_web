@@ -2,7 +2,7 @@
  * Created by pierremarsot on 24/07/2017.
  */
 import {postApi} from '../tools/api';
-import {setLocalStorage, ID_TOKEN} from '../tools/localStorage';
+import {setLocalStorage, ID_TOKEN, deleteLocalStorage} from '../tools/localStorage';
 import {sendMessageError, sendMessageSuccess} from './toast';
 
 export const LOGIN_ENTREPRISE_SUCCESS = 'LOGIN_ENTREPRISE_SUCCESS';
@@ -122,8 +122,14 @@ export function registerEntreprise(nomEntreprise, email, password, confirmPasswo
 
 export function logout() {
   return dispatch => {
-    return dispatch({
-      type: LOG_OUT,
-    });
+    if(!deleteLocalStorage(ID_TOKEN))
+    {
+      return false;
+    }
+    else{
+      return dispatch({
+        type: LOG_OUT,
+      });
+    }
   };
 }

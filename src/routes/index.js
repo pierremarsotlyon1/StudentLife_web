@@ -9,6 +9,7 @@ const rootRoute = {
       callback(null, [
         require('./login/index').default,
         require('./register/index').default,
+        require('./dashboard/index').default,
       ]);
     })
   },
