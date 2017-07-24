@@ -30,29 +30,30 @@ class Menu extends React.Component {
     if (!token || token.length === 0) {
       rightMenu =
         <div>
-          <Button color="contrast">
-            <Link to="/login">
+          <Link to="/login">
+            <Button color="contrast">
               Se connecter
-            </Link>
-          </Button>
-          <Button color="contrast">
-            <Link to="/register">
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button color="contrast">
               S'inscrire
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
     } else {
       rightMenu = <div>
-        <Button color="contrast">
-          <Link to="/dashboard">
+        <Link to="/dashboard">
+          <Button color="contrast">
             Mon compte
-          </Link>
-        </Button>
-        <Button color="contrast">
-          <Link to="/annonces">
+          </Button>
+        </Link>
+        <Link to="/annonces">
+          <Button color="contrast">
             Mes annonces
-          </Link>
-        </Button>
+          </Button>
+        </Link>
+
         <IconButton
           className={classes.button}
           aria-label="Logout"

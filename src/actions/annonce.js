@@ -83,6 +83,10 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
       return dispatch(addAnnonceError());
     }
 
+    if (reduction) {
+      reduction = Number.parseInt(reduction);
+    }
+
     postApi('/api/entreprise/bonsplans', {
       _source: {
         title: titre,
@@ -107,6 +111,35 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
           dispatch(sendMessageError(response.error));
         }
         return dispatch(addAnnonceError());
+      });
+  };
+}
+
+function removeAnnonceSuccess(id) {
+  return {
+    type: REMOVE_ANNONCE_SUCCESS,
+    id: id,
+  };
+}
+
+function removeAnnonceError() {
+  return {
+    type: REMOVE_ANNONCE_ERROR,
+  };
+}
+
+export function removeAnnonce(id) {
+  return dispatch => {
+    removeApi('/api/entreprise/bonsplans/' + id)
+      .then((response) => {
+        dispatch(sendMessageSuccess('Annonce supprimée avec succés'));
+        return dispatch(removeAnnonceSuccess(id));
+      })
+      .catch((response) => {
+        if (response && response.error) {
+          dispatch(sendMessageError(response.error));
+        }
+        return dispatch(removeAnnonceError());
       });
   };
 }
