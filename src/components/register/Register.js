@@ -51,7 +51,7 @@ class Register extends React.Component {
   };
 
   handlePassword = (e) => {
-    this.setState({ password: event.target.value })
+    this.setState({ password: e.target.value })
   };
 
   handleConfirmPassword = (e) => {
@@ -59,7 +59,7 @@ class Register extends React.Component {
   };
 
   handleSubmit = (e) => {
-    this.props.dispatch(registerEntreprise(this.state.email, this.state.password));
+    this.props.dispatch(registerEntreprise(this.state.nomEntreprise, this.state.email, this.state.password, this.state.confirmPassword));
   };
 
   render() {

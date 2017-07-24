@@ -35,7 +35,7 @@ export function loginEntreprise(email, password) {
       return dispatch(loginEntrepriseError());
     }
 
-    postApi('/login', {
+    postApi('/entreprise/login', {
       email: email,
       password: password,
     })
@@ -87,18 +87,16 @@ export function registerEntreprise(nomEntreprise, email, password, confirmPasswo
       return dispatch(registerEntrepriseError());
     }
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       dispatch(sendMessageError('Vos mots de passe ne sont pas identique'));
       return dispatch(registerEntrepriseError());
     }
 
-    postApi('/register', {
-      _source: {
-        nom_entreprise: nomEntreprise,
-        email: email,
-        password: password,
-        confirm_password: confirmPassword,
-      }
+    postApi('/entreprise/register', {
+      nom_entreprise: nomEntreprise,
+      email: email,
+      password: password,
+      confirm_password: confirmPassword,
     })
       .then((response) => {
         return dispatch(registerEntrepriseSuccess(response));
