@@ -83,12 +83,19 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
       return dispatch(addAnnonceError());
     }
 
-    if (reduction !== undefined) {
-      reduction = Number.parseInt(reduction);
+    if(reduction > 100){
+      dispatch(sendMessageError('Vous devez saisir un pourcentage de réduction inférieur ou égal à 100'));
+      return dispatch(addAnnonceError());
     }
 
     const momentDateDebut = moment(dateDebut);
     const momentDateFin = moment(dateFin);
+    const momentDateNow = moment().format('YYYY-MM-DD');
+
+    if(momentDateDebut.isBefore(momentDateNow)){
+      dispatch(sendMessageError('Vous devez saisir une date de début supérieur ou égale à celle d\'aujourd\'hui'));
+      return dispatch(addAnnonceError());
+    }
 
     if(momentDateDebut.isAfter(momentDateFin)){
       dispatch(sendMessageError('Vous devez saisir une date de début inférieur à celle de fin'));
