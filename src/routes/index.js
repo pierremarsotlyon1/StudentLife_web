@@ -4,6 +4,15 @@
 const rootRoute = {
   path: '/',
 
+  getChildRoutes(partialNextState, callback) {
+    require.ensure([], function (require) {
+      callback(null, [
+        require('./login/index').default,
+        require('./register/index').default,
+      ]);
+    })
+  },
+
   getIndexRoute(partialNextState, callback) {
     require.ensure([], function (require) {
       callback(null, {
