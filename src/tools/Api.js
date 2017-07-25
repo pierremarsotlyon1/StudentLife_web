@@ -9,7 +9,7 @@ superagentJsonapify(superagent);
 
 const url = process.env.NODE_ENV === "development" ?
   "http://localhost:1330" :
-  "http://valeriemoroseau.com";
+  "https://valeriemoroseau.com";
 
 export function get(path, query){
   return new Promise((resolve, reject) => {

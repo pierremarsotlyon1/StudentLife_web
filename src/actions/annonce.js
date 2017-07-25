@@ -66,7 +66,7 @@ function addAnnonceError() {
   };
 }
 
-export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
+export function addAnnonce(titre, description, dateDebut, dateFin, reduction, idCategorieAnnonce) {
   return dispatch => {
     if (!titre || titre.length === 0) {
       dispatch(sendMessageError('Vous devez saisir un titre'));
@@ -85,6 +85,11 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
 
     if(reduction > 100){
       dispatch(sendMessageError('Vous devez saisir un pourcentage de réduction inférieur ou égal à 100'));
+      return dispatch(addAnnonceError());
+    }
+
+    if(!idCategorieAnnonce || idCategorieAnnonce === '0' || idCategorieAnnonce.length === 0){
+      dispatch(sendMessageError('Vous devez selectionner une catégorie d\'annonce'));
       return dispatch(addAnnonceError());
     }
 
@@ -109,6 +114,7 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction) {
         date_debut: dateDebut,
         date_fin: dateFin,
         reduction: reduction,
+        id_categorie: idCategorieAnnonce,
       }
     })
       .then((response) => {

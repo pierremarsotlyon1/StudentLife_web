@@ -3,23 +3,16 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import { browserHistory } from 'react-router'
+import {browserHistory} from 'react-router'
 import Annonce from './Annonce';
 import Link from 'react-router/lib/Link';
-import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
-import Paper from 'material-ui/Paper';
 import {loadAnnonce} from '../../actions/annonce';
 
 class AnnonceList extends React.Component {
   constructor(props) {
     super(props);
 
-    if(!this.props.token || this.props.token === 0){
+    if (!this.props.token || this.props.token === 0) {
       browserHistory.push('/');
     }
 
@@ -33,10 +26,10 @@ class AnnonceList extends React.Component {
   }
 
   render() {
-    const classes = this.props.classes;
-
     let annoncesLocales = [];
     let i = 0;
+    let blockAnnonce;
+
     for (const annonce of this.props.annonces) {
       annoncesLocales.push(
         <Annonce key={"annonce_" + i} annonce={annonce}/>
@@ -44,59 +37,38 @@ class AnnonceList extends React.Component {
       i++;
     }
 
-    if(annoncesLocales.length === 0){
-      annoncesLocales.push(
-        <Paper className={classes.marginPaper} key="empty_annonces" elevation={4}>
-          <Typography type="headline" component="h3">
-            Vous n'avez pas encore ajouté d'annonce
-          </Typography>
-        </Paper>
-      );
+    if (annoncesLocales.length === 0) {
+      blockAnnonce =
+        <p className="lead">
+          Vous n'avez pas encore ajouté d'annonce
+        </p>
+    }
+    else {
+      blockAnnonce =
+        <div className="accordion" id="accordion-job">
+          {annoncesLocales}
+        </div>
     }
 
     return (
-      <Grid container justify="center">
-        <Grid container justify="center">
-          <Grid item xs={5}>
-            <Typography type="headline" component="h2" className={classes.marginTitle}>
-              Mes annonces
-            </Typography>
-          </Grid>
-          <Grid item xs={1}>
-            <Button fab color="primary" className={classes.button}>
-              <Link to="/annonces/add" className="link">
-                <AddIcon />
-              </Link>
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Grid container justify="center">
-          <Grid item xs={6}>
-            {annoncesLocales}
-          </Grid>
-        </Grid>
-      </Grid>
+      <section className="annonce_list">
+        <div className="container mt-100">
+          <div className="row gap-y align-items-center">
+            <div className="col-md-12 text-center">
+              <h3>Mes annonces</h3>
+              <hr/>
+            </div>
+          </div>
+          <div className="row gap-y align-items-center">
+            <div className="col-md-12">
+              {blockAnnonce}
+            </div>
+          </div>
+        </div>
+      </section >
     )
   }
 }
-
-const styleSheet = createStyleSheet('FloatingActionButtons', theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  marginTitle: {
-    marginTop: 20,
-  },
-  marginPaper: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-  }),
-}));
-
-AnnonceList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 function mapStateToProps(state) {
   return {
@@ -105,4 +77,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styleSheet)(AnnonceList));
+export default connect(mapStateToProps)(AnnonceList);

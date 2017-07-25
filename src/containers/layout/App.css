@@ -6,3 +6,7 @@ html, body {
     color: #ffffff;
     text-decoration: none;
 }
+
+.home_page .header {
+    background-image: url("../../../public/assets/img/demo/zendesk/header.jpg");
+}

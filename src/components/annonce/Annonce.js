@@ -23,65 +23,68 @@ class Annonce extends React.Component {
   };
 
   render() {
-    const classes = this.props.classes;
     const annonce = this.props.annonce;
 
+    const href = "#collapse-annonce-" + annonce._id;
+    const id = "collapse-annonce-" + annonce._id;
+
+    let description;
+    if(annonce._source.description && annonce._source.description.length > 0){
+      description =
+        <p>
+          {annonce._source.description}
+        </p>;
+    }
+    else{
+      description =
+        <p>
+          Aucune description
+        </p>;
+    }
+
     return (
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography type="body1" className={classes.title}>
-            Du {annonce._source.date_debut} au {annonce._source.date_fin}
-          </Typography>
-          <Typography component="h2">
-            {annonce._source.title}
-          </Typography>
-          <Typography type="body1" className={classes.pos}>
-            {annonce._source.description}
-          </Typography>
-          <Typography component="p">
+
+    <div className="card">
+      <h5 className="card-title">
+        <a className="d-flex collapsed" data-toggle="collapse" data-parent="#accordion-job"
+           href={href}
+           aria-expanded="false">
+          <span className="mr-auto">{annonce._source.title}</span>
+          <span className="text-lighter hidden-sm-down">
+            <i className="fa fa-map-marker mr-8"></i>
+            {annonce._source.date_debut} / {annonce._source.date_fin}
+            </span>
+        </a>
+      </h5>
+
+      <div id={id} className="in collapse" aria-expanded="false">
+        <div className="card-block">
+          {description}
+          <p>
             Réduction : {annonce._source.reduction} %
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <IconButton onClick={() => this.handleRemove(annonce._id)} color="accent" aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-          <IconButton color="primary" aria-label="Update">
-            <UpdateIcon />
-          </IconButton>
-        </CardActions>
-      </Card>
+          </p>
+          <hr className="w-100"/>
+          <p className="text-center">
+            <IconButton onClick={() => this.handleRemove(annonce._id)} color="accent" aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
+            <IconButton color="primary" aria-label="Update">
+              <UpdateIcon />
+            </IconButton>
+          </p>
+        </div>
+      </div>
+    </div>
     )
   }
 }
-
-const styleSheet = createStyleSheet('SimpleCard', theme => ({
-  card: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-    color: theme.palette.text.secondary,
-  },
-  pos: {
-    marginBottom: 12,
-    color: theme.palette.text.secondary,
-  },
-}));
 
 function mapStateToProps(state) {
   return {};
 }
 
 Annonce.propTypes = {
-  classes: PropTypes.object.isRequired,
   annonce: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styleSheet)(Annonce));
+export default connect(mapStateToProps)(Annonce);

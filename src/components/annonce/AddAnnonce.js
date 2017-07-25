@@ -14,6 +14,7 @@ import AddIcon from 'material-ui-icons/Add';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import {addAnnonce} from '../../actions/annonce';
+import {loadCategorieAnnonce} from '../../actions/categorieAnnonce';
 
 class AddAnnonce extends React.Component {
   constructor(props) {
@@ -25,7 +26,14 @@ class AddAnnonce extends React.Component {
       dateDebut: '',
       dateFin: '',
       reduction: 0,
+      idCategorieAnnonce: '',
     };
+  }
+
+  componentDidMount() {
+    if (!this.props.categoriesAnnonce || this.props.categoriesAnnonce.length === 0) {
+      this.props.dispatch(loadCategorieAnnonce());
+    }
   }
 
   handleTitre = (e) => {
@@ -56,12 +64,18 @@ class AddAnnonce extends React.Component {
     let reduction = e.target.value;
     reduction = Number.parseInt(reduction);
 
-    if(reduction < 0){
+    if (reduction < 0) {
       reduction = 0;
     }
 
     this.setState({
       reduction: reduction,
+    });
+  };
+
+  handleCategorieAnnonce = (e) => {
+    this.setState({
+      idCategorieAnnonce: e.target.value,
     });
   };
 
@@ -72,11 +86,23 @@ class AddAnnonce extends React.Component {
       this.state.dateDebut,
       this.state.dateFin,
       this.state.reduction,
+      this.state.idCategorieAnnonce,
     ));
   };
 
   render() {
     const classes = this.props.classes;
+    const categoriesAnnonce = this.props.categoriesAnnonce;
+
+    let categoriesAnnonceLocale = [
+      <option value="0" selected={true}>-----------</option>
+    ];
+
+    for(const categorieAnnonce of categoriesAnnonce){
+      categoriesAnnonceLocale.push(
+        <option key={categorieAnnonce._id} value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
+      );
+    }
 
     return (
       <Grid container justify="center">
@@ -91,6 +117,13 @@ class AddAnnonce extends React.Component {
           <Grid item xs={6}>
             <Paper className={classes.marginPaper} elevation={4}>
               <Grid container justify="center">
+                <Grid item xs={12}>
+                  <select
+                    onChange={this.handleCategorieAnnonce}
+                  >
+                    {categoriesAnnonceLocale}
+                  </select>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     id="titreBonPlan"
@@ -191,7 +224,9 @@ AddAnnonce.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    categoriesAnnonce: state.categorieAnnonce.categoriesAnnonce,
+  };
 }
 
 export default connect(mapStateToProps)(withStyles(styleSheet)(AddAnnonce));

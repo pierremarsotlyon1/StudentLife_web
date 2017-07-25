@@ -6,6 +6,7 @@ import auth from '../reducers/auth';
 import toast from '../reducers/toast';
 import entreprise from '../reducers/entreprise';
 import annonce from '../reducers/annonce';
+import categorieAnnonce from '../reducers/categorieAnnonce';
 
 import reduxReset from 'redux-reset'
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers(
     toast,
     entreprise,
     annonce,
+    categorieAnnonce,
   }
 );
 

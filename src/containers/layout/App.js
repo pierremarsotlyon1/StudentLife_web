@@ -4,7 +4,7 @@ import Toast from '../../components/toast/Toast';
 import './App.css';
 
 const App = (props) => (
-  <div id="root-content">
+  <div id="root-content" className="body-scrolled">
     <Toast/>
     <Menu/>
     {props.children}
