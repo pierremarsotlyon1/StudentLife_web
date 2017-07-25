@@ -1,18 +1,10 @@
-/**
- * Created by pierremarsot on 24/07/2017.
- */
 import React from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router'
-import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import {addAnnonce} from '../../actions/annonce';
 import {loadCategorieAnnonce} from '../../actions/categorieAnnonce';
+import moment from 'moment';
 
 class AddAnnonce extends React.Component {
   constructor(props) {
@@ -100,8 +92,8 @@ class AddAnnonce extends React.Component {
   };
 
   render() {
-    const classes = this.props.classes;
     const categoriesAnnonce = this.props.categoriesAnnonce;
+    let maxDate;
 
     let categoriesAnnonceLocale = [
       <option key="default_option" value="0" defaultValue={true}>Selectionner une catégorie d'annonce</option>
@@ -112,6 +104,10 @@ class AddAnnonce extends React.Component {
         <option key={categorieAnnonce._id}
                 value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
       );
+    }
+
+    if(this.state.dateDebut.length > 0){
+      maxDate = moment(this.state.dateDebut).add(1, 'M').format('YYYY-MM-DD');
     }
 
     return (
@@ -167,8 +163,10 @@ class AddAnnonce extends React.Component {
                 <div className="form-group">
                   <TextField
                     id="dateFinBonPlan"
-                    label="Date de début"
+                    label="Date de fin"
                     type="date"
+                    max="2017-07-25"
+                    disabled={this.state.dateDebut.length === 0}
                     onChange={event => this.handleDateFin(event)}
                     margin="normal"
                     InputLabelProps={{
@@ -202,28 +200,6 @@ class AddAnnonce extends React.Component {
   }
 }
 
-const styleSheet = createStyleSheet('FloatingActionButtons', theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  marginTitle: {
-    marginTop: 20,
-  },
-  marginPaper: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-  }),
-  center: {
-    margin: 16,
-    marginBottom: 30,
-    textAlign: 'center',
-  },
-}));
-
-AddAnnonce.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 function mapStateToProps(state) {
   return {
     categoriesAnnonce: state.categorieAnnonce.categoriesAnnonce,
@@ -232,4 +208,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styleSheet)(AddAnnonce));
+export default connect(mapStateToProps)(AddAnnonce);
