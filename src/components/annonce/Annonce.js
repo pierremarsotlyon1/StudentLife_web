@@ -29,13 +29,13 @@ class Annonce extends React.Component {
     const id = "collapse-annonce-" + annonce._id;
 
     let description;
-    if(annonce._source.description && annonce._source.description.length > 0){
+    if (annonce._source.description && annonce._source.description.length > 0) {
       description =
         <p>
           {annonce._source.description}
         </p>;
     }
-    else{
+    else {
       description =
         <p>
           Aucune description
@@ -43,38 +43,37 @@ class Annonce extends React.Component {
     }
 
     return (
-
-    <div className="card">
-      <h5 className="card-title">
-        <a className="d-flex collapsed" data-toggle="collapse" data-parent="#accordion-job"
-           href={href}
-           aria-expanded="false">
-          <span className="mr-auto">{annonce._source.title}</span>
-          <span className="text-lighter hidden-sm-down">
+      <div className="card">
+        <h5 className="card-title">
+          <a className="d-flex collapsed" data-toggle="collapse" data-parent="#accordion-job"
+             href={href}
+             aria-expanded="false">
+            <span className="mr-auto">{annonce._source.title}</span>
+            <span className="text-lighter hidden-sm-down">
             <i className="fa fa-map-marker mr-8"></i>
-            {annonce._source.date_debut} / {annonce._source.date_fin}
+              {annonce._source.date_debut} / {annonce._source.date_fin}
             </span>
-        </a>
-      </h5>
+          </a>
+        </h5>
 
-      <div id={id} className="in collapse" aria-expanded="false">
-        <div className="card-block">
-          {description}
-          <p>
-            Réduction : {annonce._source.reduction} %
-          </p>
-          <hr className="w-100"/>
-          <p className="text-center">
-            <IconButton onClick={() => this.handleRemove(annonce._id)} color="accent" aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-            <IconButton color="primary" aria-label="Update">
-              <UpdateIcon />
-            </IconButton>
-          </p>
+        <div id={id} className="in collapse" aria-expanded="false">
+          <div className="card-block">
+            {description}
+            <p>
+              Réduction : {annonce._source.reduction} %
+            </p>
+            <hr className="w-100"/>
+            <p className="text-center">
+              <IconButton onClick={() => this.handleRemove(annonce._id)} color="accent" aria-label="Delete">
+                <DeleteIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="Update">
+                <UpdateIcon />
+              </IconButton>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     )
   }
 }

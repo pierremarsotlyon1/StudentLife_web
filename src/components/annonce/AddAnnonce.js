@@ -3,14 +3,12 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import Annonce from './Annonce';
-import Link from 'react-router/lib/Link';
+import {browserHistory} from 'react-router'
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import {addAnnonce} from '../../actions/annonce';
@@ -19,6 +17,10 @@ import {loadCategorieAnnonce} from '../../actions/categorieAnnonce';
 class AddAnnonce extends React.Component {
   constructor(props) {
     super(props);
+
+    if (!this.props.token || this.props.token.length === 0) {
+      browserHistory.push('/');
+    }
 
     this.state = {
       titre: '',
@@ -33,6 +35,12 @@ class AddAnnonce extends React.Component {
   componentDidMount() {
     if (!this.props.categoriesAnnonce || this.props.categoriesAnnonce.length === 0) {
       this.props.dispatch(loadCategorieAnnonce());
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.annonces.length < nextProps.annonces.length) {
+      browserHistory.push('/annonces');
     }
   }
 
@@ -79,7 +87,8 @@ class AddAnnonce extends React.Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.props.dispatch(addAnnonce(
       this.state.titre,
       this.state.description,
@@ -95,60 +104,55 @@ class AddAnnonce extends React.Component {
     const categoriesAnnonce = this.props.categoriesAnnonce;
 
     let categoriesAnnonceLocale = [
-      <option value="0" selected={true}>-----------</option>
+      <option key="default_option" value="0" defaultValue={true}>Selectionner une catégorie d'annonce</option>
     ];
 
-    for(const categorieAnnonce of categoriesAnnonce){
+    for (const categorieAnnonce of categoriesAnnonce) {
       categoriesAnnonceLocale.push(
-        <option key={categorieAnnonce._id} value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
+        <option key={categorieAnnonce._id}
+                value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
       );
     }
 
     return (
-      <Grid container justify="center">
-        <Grid container justify="center">
-          <Grid item xs={12} justify="center" className={classes.center}>
-            <Typography type="headline" component="h2">
-              Ajouter une annonce
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container justify="center">
-          <Grid item xs={6}>
-            <Paper className={classes.marginPaper} elevation={4}>
-              <Grid container justify="center">
-                <Grid item xs={12}>
+      <section className="annonce_list">
+        <div className="container mt-100">
+          <div className="row gap-y align-items-center">
+            <div className="col-md-12 text-center">
+              <h3>Ajouter une annonce</h3>
+              <hr/>
+            </div>
+          </div>
+          <div className="row gap-y align-items-center">
+            <div className="col-md-12">
+              <div className="card card-shadowed p-50 mb-0">
+                <div className="form-group">
                   <select
+                    className="form-control"
                     onChange={this.handleCategorieAnnonce}
                   >
                     {categoriesAnnonceLocale}
                   </select>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="titreBonPlan"
-                    label="Titre du bon plan"
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Titre de l'annonce"
                     value={this.state.titre}
                     onChange={event => this.handleTitre(event)}
-                    margin="normal"
-                    type="text"
-                    fullWidth
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="descriptionBonPlan"
-                    label="Description du bon plan"
+                </div>
+                <div className="form-group">
+                  <textarea
+                    className="form-control"
+                    type="text"
+                    placeholder="Description du bon plan"
                     value={this.state.description}
-                    rowsMax="5"
                     onChange={event => this.handleDescription(event)}
-                    margin="normal"
-                    type="text"
-                    fullWidth
-                    multiline
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </div>
+                <div className="form-group">
                   <TextField
                     id="dateDebutBonPlan"
                     label="Date de début"
@@ -159,8 +163,8 @@ class AddAnnonce extends React.Component {
                       shrink: true,
                     }}
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </div>
+                <div className="form-group">
                   <TextField
                     id="dateFinBonPlan"
                     label="Date de début"
@@ -171,32 +175,29 @@ class AddAnnonce extends React.Component {
                       shrink: true,
                     }}
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="reductionBonPlan"
-                    label="Réduction (en %)"
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="number"
+                    placeholder="Réduction (en %)"
                     value={this.state.reduction}
                     onChange={event => this.handleReduction(event)}
-                    margin="normal"
-                    type="number"
-                    fullWidth
                   />
-                </Grid>
-                <Grid item xs={12} className={classes.center}>
-                  <Button
-                    raised
-                    color="primary"
-                    onClick={event => this.handleSubmit()}
+                </div>
+                <div className="form-group">
+                  <button
+                    className="btn btn-bold btn-block btn-primary"
+                    onClick={event => this.handleSubmit(event)}
                   >
                     Ajouter l'annonce
-                  </Button>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Grid>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     )
   }
 }
@@ -226,6 +227,8 @@ AddAnnonce.propTypes = {
 function mapStateToProps(state) {
   return {
     categoriesAnnonce: state.categorieAnnonce.categoriesAnnonce,
+    annonces: state.annonce.annonces,
+    token: state.auth.token,
   };
 }
 

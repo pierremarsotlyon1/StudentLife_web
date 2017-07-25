@@ -2,7 +2,7 @@
  * Created by pierremarsot on 24/07/2017.
  */
 import {get, putApi} from '../tools/api';
-import {sendMessageError} from './toast';
+import {sendMessageError, sendMessageSuccess} from './toast';
 
 export const LOAD_PROFIL_ENTREPRISE_SUCCESS = 'LOAD_PROFIL_ENTREPRISE_SUCCESS';
 export const LOAD_PROFIL_ENTREPRISE_ERROR = 'LOAD_PROFIL_ENTREPRISE_ERROR';
@@ -65,6 +65,7 @@ export function updateProfilEntreprise(nomEntreprise) {
       }
     })
       .then((response) => {
+        dispatch(sendMessageSuccess('Vos informations ont bien été mises à jour'));
         return dispatch(updateProfilEntrepriseSuccess(response));
       })
       .catch((response) => {

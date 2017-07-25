@@ -3,20 +3,14 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import { browserHistory } from 'react-router'
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import {browserHistory} from 'react-router'
 import {loadProfilEntreprise, updateProfilEntreprise} from '../../actions/entreprise';
 
 class Dashboard extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    if(!this.props.token || this.props.token === 0){
+    if (!this.props.token || this.props.token === 0) {
       browserHistory.push('/');
     }
 
@@ -25,12 +19,12 @@ class Dashboard extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(loadProfilEntreprise());
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.entreprise){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entreprise) {
       this.setState({
         ...this.state,
         nomEntreprise: nextProps.entreprise._source.nom_entreprise,
@@ -44,62 +38,52 @@ class Dashboard extends React.Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.props.dispatch(updateProfilEntreprise(this.state.nomEntreprise));
   };
 
-  render(){
-    const classes = this.props.classes;
+  render() {
     return (
-      <div>
-        <Grid container justify="center">
-          <Grid item xs={8}>
-            <Paper className={classes.root} elevation={4}>
-              <Typography type="headline" component="h3">
-                Mes informations
-              </Typography>
-              <Grid item xs={12}>
-                <TextField
-                  id="nomEntreprise"
-                  label="Nom de mon entreprise"
-                  value={this.state.nomEntreprise}
-                  onChange={event => this.handleNomEntreprise(event)}
-                  margin="normal"
-                  type="text"
-                  fullWidth
-                />
-              </Grid>
+      <div className="container mt-100">
+        <div className="row gap-y align-items-center">
+          <div className="col-md-12 text-center">
+            <div className="card card-shadowed p-50 mb-0">
+              <h5 className="text-uppercase text-center">Mes informations</h5>
+              <br/><br/>
+              <form className="form-type-material">
 
-              <Grid item xs={12}>
-                <Button
-                  raised
-                  color="primary"
-                  className={classes.button}
-                  onClick={event => this.handleSubmit()}
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Nom de votre entreprise"
+                    value={this.state.nomEntreprise}
+                    onChange={event => this.handleNomEntreprise(event)}
+                  />
+                </div>
+
+                <br/>
+                <button
+                  className="btn btn-bold btn-block btn-primary"
+                  onClick={event => this.handleSubmit(event)}
                 >
                   Modifier mes informations
-                </Button>
-              </Grid>
-            </Paper>
-          </Grid>
-        </Grid>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
 }
 
-const styleSheet = createStyleSheet('Dashboard', theme => ({
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-  })
-}));
-
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     token: state.auth.token,
     entreprise: state.entreprise.entreprise,
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styleSheet)(Dashboard));
+export default connect(mapStateToProps)(Dashboard);

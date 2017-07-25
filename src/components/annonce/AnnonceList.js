@@ -22,7 +22,9 @@ class AnnonceList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(loadAnnonce(this.state.offset));
+    if (this.props.annonces.length === 0) {
+      this.props.dispatch(loadAnnonce(this.state.offset));
+    }
   }
 
   render() {
@@ -39,7 +41,7 @@ class AnnonceList extends React.Component {
 
     if (annoncesLocales.length === 0) {
       blockAnnonce =
-        <p className="lead">
+        <p className="lead text-center">
           Vous n'avez pas encore ajouté d'annonce
         </p>
     }
@@ -65,7 +67,13 @@ class AnnonceList extends React.Component {
             </div>
           </div>
         </div>
-      </section >
+        <Link
+          className="scroll-top"
+          to="/annonces/add"
+        >
+          <i className="fa fa-plus" aria-hidden="true"></i>
+        </Link>
+      </section>
     )
   }
 }

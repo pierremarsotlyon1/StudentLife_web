@@ -53,7 +53,12 @@ class Menu extends React.Component {
           </li>
         </ul>
           <div className="d-inline-flex ml-30">
-            <a className="btn btn-sm btn-danger mr-4" href="#" onClick={() => this.handleLogout()}>Déconnexion</a>
+            <span
+              className="btn btn-sm btn-danger mr-4"
+              onClick={() => this.handleLogout()}
+            >
+              Déconnexion
+            </span>
           </div>
         </div>;
     }
