@@ -119,7 +119,7 @@ class Register extends React.Component {
               className="btn btn-bold btn-block btn-primary"
               onClick={event => this.handleSubmit(event)}
             >
-              Register
+              Inscription
             </button>
           </form>
 
