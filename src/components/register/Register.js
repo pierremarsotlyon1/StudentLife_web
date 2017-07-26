@@ -23,7 +23,7 @@ class Register extends React.Component {
     super(props);
 
     if (isConnected()) {
-      browserHistory.push('/');
+      browserHistory.push('/dashboard');
     }
 
     this.state = {
@@ -36,7 +36,7 @@ class Register extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.token !== nextProps.token && nextProps.token.length > 0) {
-      browserHistory.push('/');
+      browserHistory.push('/dashboard');
     }
   }
 

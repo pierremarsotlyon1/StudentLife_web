@@ -2,11 +2,44 @@
  * Created by pierremarsot on 14/05/2017.
  */
 import React from 'react'
+import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import Ionicon from 'react-ionicons'
 
 class Home extends React.Component {
   render() {
+    const token = this.props.token;
+
+    let btnHeader;
+    if (token && token.length > 0) {
+      btnHeader =
+        <span>
+          <Link
+            className="btn btn-lg btn-round w-300 btn-primary mr-16"
+            to="/annonces/add"
+          >
+            Publier une annonce
+          </Link>
+        </span>;
+    }
+    else {
+      btnHeader =
+        <span>
+          <Link
+            className="btn btn-lg btn-round w-200 btn-primary mr-16"
+            to="/login"
+          >
+            Connexion
+          </Link>
+          <Link
+            className="btn btn-lg btn-round btn-outline w-200 btn-white hidden-sm-down"
+            to="/register"
+          >
+            Inscription
+          </Link>
+        </span>;
+    }
+
     return (
       <div className="home_page">
         <header className="header header-inverse h-fullscreen pb-30 bg-fixed" data-overlay="1">
@@ -15,7 +48,7 @@ class Home extends React.Component {
             <div className="row h-full">
               <div className="col-12 col-lg-6 align-self-center">
 
-                <h1 className="display-4">Aidez les étudiants de Lyon !</h1>
+                <h1 className="display-4">Aidez les étudiants lyonnais !</h1>
                 <br/>
                 <h4 className="fw-200">
                   Publiez des offres gratuitement que
@@ -25,18 +58,7 @@ class Home extends React.Component {
 
                 <br/><br/>
 
-                <Link
-                  className="btn btn-lg btn-round w-200 btn-primary mr-16"
-                  to="/login"
-                >
-                  Connexion
-                </Link>
-                <Link
-                  className="btn btn-lg btn-round btn-outline w-200 btn-white hidden-sm-down"
-                  to="/register"
-                >
-                  Inscription
-                </Link>
+                {btnHeader}
 
               </div>
 
@@ -58,7 +80,8 @@ class Home extends React.Component {
                 <hr/>
                 <p className="lead">
                   Les problématiques chez les étudiants sont nombreuses et ne demandent qu'a être résoluent.
-                  Faites profiter aux étudiants de réductions sur vos produits / services et augmenter votre CA / notoriété.
+                  Faites profiter aux étudiants de réductions sur vos produits / services et augmenter votre CA /
+                  notoriété.
                 </p>
               </header>
 
@@ -95,7 +118,9 @@ class Home extends React.Component {
                   <div className="card card-bordered card-hover-shadow text-center">
                     <a className="card-block" href="#">
                       <p><i className="fs-50">1</i> mois</p>
-                      <h5 className="card-title">Durée</h5>
+                      <h5 className="card-title">
+                        Mise en ligne
+                      </h5>
                     </a>
                   </div>
                 </div>
@@ -120,4 +145,10 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+  };
+}
+
+export default connect(mapStateToProps)(Home);
