@@ -17,6 +17,7 @@ class AddAnnonce extends React.Component {
       description: '',
       reduction: 0,
       idCategorieAnnonce: '',
+      url: '',
     };
   }
 
@@ -41,6 +42,12 @@ class AddAnnonce extends React.Component {
   handleDescription = (e) => {
     this.setState({
       description: e.target.value,
+    });
+  };
+
+  handleUrl = (e) => {
+    this.setState({
+      url: e.target.value,
     });
   };
 
@@ -70,6 +77,7 @@ class AddAnnonce extends React.Component {
       this.state.description,
       this.state.reduction,
       this.state.idCategorieAnnonce,
+      this.state.url,
     ));
   };
 
@@ -132,6 +140,15 @@ class AddAnnonce extends React.Component {
                     placeholder="Réduction (en %)"
                     value={this.state.reduction}
                     onChange={event => this.handleReduction(event)}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Url de votre page web qui décrit le service"
+                    value={this.state.url}
+                    onChange={event => this.handleUrl(event)}
                   />
                 </div>
                 <div className="form-group">

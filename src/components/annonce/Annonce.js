@@ -25,7 +25,7 @@ class Annonce extends React.Component {
     const href = "#collapse-annonce-" + annonce._id;
     const id = "collapse-annonce-" + annonce._id;
 
-    let description;
+    let description, url;
     if (annonce._source.description && annonce._source.description.length > 0) {
       description =
         <p>
@@ -37,6 +37,13 @@ class Annonce extends React.Component {
         <p>
           Aucune description
         </p>;
+    }
+
+    if (annonce._source.url) {
+      url =
+        <p>
+          Url : <a href={annonce._source.url} target="_blank">{annonce._source.url}</a>
+        </p>
     }
 
     return (
@@ -59,13 +66,14 @@ class Annonce extends React.Component {
             <p>
               Réduction : {annonce._source.reduction} %
             </p>
+            {url}
             <hr className="w-100"/>
             <p className="text-center">
               <IconButton onClick={() => this.handleRemove(annonce._id)} color="accent" aria-label="Delete">
-                <DeleteIcon />
+                <DeleteIcon/>
               </IconButton>
               <IconButton color="primary" aria-label="Update">
-                <UpdateIcon />
+                <UpdateIcon/>
               </IconButton>
             </p>
           </div>

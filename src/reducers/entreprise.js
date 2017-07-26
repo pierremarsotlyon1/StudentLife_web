@@ -6,6 +6,8 @@ import {
   LOAD_PROFIL_ENTREPRISE_SUCCESS,
   UPDATE_PROFIL_ENTREPRISE_ERROR,
   UPDATE_PROFIL_ENTREPRISE_SUCCESS,
+  UPLOAD_LOGO_SUCCESS,
+  UPLOAD_LOGO_ERROR,
 } from '../actions/entreprise';
 
 const initialState = {
@@ -33,6 +35,19 @@ export default function entreprise(state = initialState, action = {}) {
       return {
         ...state,
         entreprise: action.entreprise,
+      };
+
+    case UPLOAD_LOGO_SUCCESS:
+      if (!action.urlLogo) {
+        return state;
+      }
+
+      const entreprise = Object.assign({}, state.entreprise);
+      entreprise._source.logo_entreprise = action.urlLogo;
+
+      return {
+        ...state,
+        entreprise: entreprise,
       };
 
     default:

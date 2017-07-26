@@ -66,7 +66,7 @@ function addAnnonceError() {
   };
 }
 
-export function addAnnonce(titre, description, reduction, idCategorieAnnonce) {
+export function addAnnonce(titre, description, reduction, idCategorieAnnonce, url) {
   return dispatch => {
     if (!titre || titre.length === 0) {
       dispatch(sendMessageError('Vous devez saisir un titre'));
@@ -89,6 +89,7 @@ export function addAnnonce(titre, description, reduction, idCategorieAnnonce) {
         description: description,
         reduction: reduction,
         id_categorie: idCategorieAnnonce,
+        url: url,
       }
     })
       .then((response) => {

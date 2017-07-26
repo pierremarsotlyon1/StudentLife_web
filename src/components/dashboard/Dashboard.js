@@ -4,7 +4,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router'
-import {loadProfilEntreprise, updateProfilEntreprise} from '../../actions/entreprise';
+import {loadProfilEntreprise, updateProfilEntreprise, uploadLogo} from '../../actions/entreprise';
+import Dropzone from 'react-dropzone'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Dashboard extends React.Component {
 
     this.state = {
       nomEntreprise: '',
+      logoEntreprise: '',
     };
   }
 
@@ -28,6 +30,7 @@ class Dashboard extends React.Component {
       this.setState({
         ...this.state,
         nomEntreprise: nextProps.entreprise._source.nom_entreprise,
+        logoEntreprise: nextProps.entreprise._source.logo_entreprise,
       });
     }
   }
@@ -37,6 +40,11 @@ class Dashboard extends React.Component {
       nomEntreprise: e.target.value,
     });
   };
+
+  onImageDrop = (files) => {
+    this.props.dispatch(uploadLogo(files[0]));
+  };
+
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -70,6 +78,26 @@ class Dashboard extends React.Component {
                 >
                   Modifier mes informations
                 </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div className="row gap-y align-items-center">
+          <div className="col-md-12 text-center">
+            <div className="card card-shadowed p-50 mb-0">
+              <h5 className="text-uppercase text-center">
+                Mon logo <img className="" src={this.state.logoEntreprise} alt="logo entreprise" />
+              </h5>
+              <br/><br/>
+              <form className="form-type-material text-center">
+                <Dropzone
+                  multiple={false}
+                  accept="image/*"
+                  onDrop={this.onImageDrop}
+                  className="col-md-12"
+                >
+                  <p>Déplacer votre logo ici ou cliquez pour en choisir un (taille préférée de 80 x 80).</p>
+                </Dropzone>
               </form>
             </div>
           </div>
