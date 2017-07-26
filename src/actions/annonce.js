@@ -66,20 +66,10 @@ function addAnnonceError() {
   };
 }
 
-export function addAnnonce(titre, description, dateDebut, dateFin, reduction, idCategorieAnnonce) {
+export function addAnnonce(titre, description, reduction, idCategorieAnnonce) {
   return dispatch => {
     if (!titre || titre.length === 0) {
       dispatch(sendMessageError('Vous devez saisir un titre'));
-      return dispatch(addAnnonceError());
-    }
-
-    if (!dateDebut) {
-      dispatch(sendMessageError('Vous devez saisir une date de début'));
-      return dispatch(addAnnonceError());
-    }
-
-    if (!dateFin) {
-      dispatch(sendMessageError('Vous devez saisir une date de fin'));
       return dispatch(addAnnonceError());
     }
 
@@ -93,26 +83,10 @@ export function addAnnonce(titre, description, dateDebut, dateFin, reduction, id
       return dispatch(addAnnonceError());
     }
 
-    const momentDateDebut = moment(dateDebut);
-    const momentDateFin = moment(dateFin);
-    const momentDateNow = moment().format('YYYY-MM-DD');
-
-    if(momentDateDebut.isBefore(momentDateNow)){
-      dispatch(sendMessageError('Vous devez saisir une date de début supérieur ou égale à celle d\'aujourd\'hui'));
-      return dispatch(addAnnonceError());
-    }
-
-    if(momentDateDebut.isAfter(momentDateFin)){
-      dispatch(sendMessageError('Vous devez saisir une date de début inférieur à celle de fin'));
-      return dispatch(addAnnonceError());
-    }
-
     postApi('/api/entreprise/bonsplans', {
       _source: {
         title: titre,
         description: description,
-        date_debut: dateDebut,
-        date_fin: dateFin,
         reduction: reduction,
         id_categorie: idCategorieAnnonce,
       }

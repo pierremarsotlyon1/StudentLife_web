@@ -4,9 +4,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Card, {CardActions, CardContent} from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import UpdateIcon from 'material-ui-icons/Update';

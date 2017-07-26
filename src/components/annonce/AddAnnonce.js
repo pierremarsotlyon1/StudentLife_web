@@ -1,10 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router'
-import TextField from 'material-ui/TextField';
 import {addAnnonce} from '../../actions/annonce';
 import {loadCategorieAnnonce} from '../../actions/categorieAnnonce';
-import moment from 'moment';
 
 class AddAnnonce extends React.Component {
   constructor(props) {
@@ -17,8 +15,6 @@ class AddAnnonce extends React.Component {
     this.state = {
       titre: '',
       description: '',
-      dateDebut: '',
-      dateFin: '',
       reduction: 0,
       idCategorieAnnonce: '',
     };
@@ -48,18 +44,6 @@ class AddAnnonce extends React.Component {
     });
   };
 
-  handleDateDebut = (e) => {
-    this.setState({
-      dateDebut: e.target.value,
-    });
-  };
-
-  handleDateFin = (e) => {
-    this.setState({
-      dateFin: e.target.value,
-    });
-  };
-
   handleReduction = (e) => {
     let reduction = e.target.value;
     reduction = Number.parseInt(reduction);
@@ -84,8 +68,6 @@ class AddAnnonce extends React.Component {
     this.props.dispatch(addAnnonce(
       this.state.titre,
       this.state.description,
-      this.state.dateDebut,
-      this.state.dateFin,
       this.state.reduction,
       this.state.idCategorieAnnonce,
     ));
@@ -93,7 +75,6 @@ class AddAnnonce extends React.Component {
 
   render() {
     const categoriesAnnonce = this.props.categoriesAnnonce;
-    let maxDate;
 
     let categoriesAnnonceLocale = [
       <option key="default_option" value="0" defaultValue={true}>Selectionner une catégorie d'annonce</option>
@@ -104,10 +85,6 @@ class AddAnnonce extends React.Component {
         <option key={categorieAnnonce._id}
                 value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
       );
-    }
-
-    if(this.state.dateDebut.length > 0){
-      maxDate = moment(this.state.dateDebut).add(1, 'M').format('YYYY-MM-DD');
     }
 
     return (
@@ -149,32 +126,6 @@ class AddAnnonce extends React.Component {
                   />
                 </div>
                 <div className="form-group">
-                  <TextField
-                    id="dateDebutBonPlan"
-                    label="Date de début"
-                    type="date"
-                    margin="normal"
-                    onChange={event => this.handleDateDebut(event)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <TextField
-                    id="dateFinBonPlan"
-                    label="Date de fin"
-                    type="date"
-                    max="2017-07-25"
-                    disabled={this.state.dateDebut.length === 0}
-                    onChange={event => this.handleDateFin(event)}
-                    margin="normal"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </div>
-                <div className="form-group">
                   <input
                     className="form-control"
                     type="number"
@@ -188,7 +139,7 @@ class AddAnnonce extends React.Component {
                     className="btn btn-bold btn-block btn-primary"
                     onClick={event => this.handleSubmit(event)}
                   >
-                    Ajouter l'annonce
+                    Mettre en ligne mon annonce
                   </button>
                 </div>
               </div>
