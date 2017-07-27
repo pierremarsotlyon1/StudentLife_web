@@ -48,7 +48,7 @@ class Home extends React.Component {
             <div className="row h-full">
               <div className="col-12 col-lg-6 align-self-center">
 
-                <h1 className="display-4">Aidez les étudiants lyonnais !</h1>
+                <h1 className="display-4">Attirez les étudiants lyonnais !</h1>
                 <br/>
                 <h4 className="fw-200">
                   Publiez des offres gratuitement que
