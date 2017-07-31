@@ -45,6 +45,11 @@ class Menu extends React.Component {
               Mes annonces
             </Link>
           </li>
+            <li className="nav-item">
+              <Link to="/jobs" className="nav-link">
+                Mes offres d'emploi
+              </Link>
+            </li>
           <li className="nav-item">
             <Link to="#" className="nav-link" onClick={() => this.handleLogout()}>
 
