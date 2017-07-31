@@ -64,6 +64,7 @@ function addJobError() {
 export function addJob(titre,
                        description,
                        competences,
+                       profil,
                        debut_contrat,
                        remuneration,
                        email_contact,
@@ -103,6 +104,7 @@ export function addJob(titre,
         titre: titre,
         description: description,
         competences: competences,
+        profil: profil,
         debut_contrat: debut_contrat,
         remuneration: remuneration,
         email_contact: email_contact,
@@ -147,7 +149,7 @@ export function removeJob(id) {
     removeApi('/api/jobs/' + id)
       .then(() => {
         dispatch(sendMessageSuccess('Votre offre d\'emploi a bien été supprimée'));
-        return dispatch(removeJobError(id));
+        return dispatch(removeJobSuccess(id));
       })
       .catch((response) => {
         if (response && response.error) {

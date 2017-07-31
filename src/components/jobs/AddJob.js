@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router'
-import {addAnnonce} from '../../actions/annonce';
-import {loadCategorieAnnonce} from '../../actions/categorieAnnonce';
+import {addJob} from '../../actions/job';
+import {loadContratTravail} from '../../actions/contratTravail';
 
 class AddJob extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class AddJob extends React.Component {
       titre: '',
       description: '',
       competences: '',
+      profil: '',
       debut_contrat: '',
       remuneration: 0,
       email_contact: '',
@@ -25,8 +26,8 @@ class AddJob extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.categoriesAnnonce || this.props.categoriesAnnonce.length === 0) {
-      this.props.dispatch(loadCategorieAnnonce());
+    if (!this.props.contratsTravail || this.props.contratsTravail.length === 0) {
+      this.props.dispatch(loadContratTravail());
     }
   }
 
@@ -35,6 +36,12 @@ class AddJob extends React.Component {
       browserHistory.push('/jobs');
     }
   }
+
+  handleProfil = (e) => {
+    this.setState({
+      profil: e.target.value,
+    });
+  };
 
   handleTitre = (e) => {
     this.setState({
@@ -94,10 +101,11 @@ class AddJob extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.dispatch(addAnnonce(
+    this.props.dispatch(addJob(
       this.state.titre,
       this.state.description,
       this.state.competences,
+      this.state.profil,
       this.state.debut_contrat,
       this.state.remuneration,
       this.state.email_contact,
@@ -107,16 +115,16 @@ class AddJob extends React.Component {
   };
 
   render() {
-    const categoriesAnnonce = this.props.categoriesAnnonce;
+    const contratsTravail = this.props.contratsTravail;
 
-    let categoriesAnnonceLocale = [
-      <option key="default_option" value="0" defaultValue={true}>Selectionner une catégorie d'annonce</option>
+    let contratsTravailLocale = [
+      <option key="default_option" value="0" defaultValue={true}>Selectionner un type de contrat de travail</option>
     ];
 
-    for (const categorieAnnonce of categoriesAnnonce) {
-      categoriesAnnonceLocale.push(
-        <option key={categorieAnnonce._id}
-                value={categorieAnnonce._id}>{categorieAnnonce._source.nom_categorie_annonce}</option>
+    for (const contratTravail of contratsTravail) {
+      contratsTravailLocale.push(
+        <option key={contratTravail._id}
+                value={contratTravail._id}>{contratTravail._source.nom_contrat_travail}</option>
       );
     }
 
@@ -134,10 +142,9 @@ class AddJob extends React.Component {
               <div className="card card-shadowed p-50 mb-0">
                 <div className="form-group">
                   <select
-                    className="form-control"
-                    onChange={this.handleCategorieAnnonce}
+                    onChange={this.handleIdTypeContact}
                   >
-                    {categoriesAnnonceLocale}
+                    {contratsTravailLocale}
                   </select>
                 </div>
                 <div className="form-group">
@@ -153,27 +160,63 @@ class AddJob extends React.Component {
                   <textarea
                     className="form-control"
                     type="text"
-                    placeholder="Description du bon plan"
+                    placeholder="Description"
                     value={this.state.description}
                     onChange={event => this.handleDescription(event)}
+                  />
+                </div>
+                <div className="form-group">
+                  <textarea
+                    className="form-control"
+                    type="text"
+                    placeholder="Profil recherché"
+                    value={this.state.profil}
+                    onChange={event => this.handleProfil(event)}
+                  />
+                </div>
+                <div className="form-group">
+                  <textarea
+                    className="form-control"
+                    type="text"
+                    placeholder="Compétences necessaires"
+                    value={this.state.competences}
+                    onChange={event => this.handleCompetences(event)}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="date"
+                    placeholder="Date de début de contrat"
+                    value={this.state.debut_contrat}
+                    onChange={event => this.handleDebutContrat(event)}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     className="form-control"
                     type="number"
-                    placeholder="Réduction (en %)"
-                    value={this.state.reduction}
-                    onChange={event => this.handleReduction(event)}
+                    placeholder="Rémunération"
+                    value={this.state.remuneration}
+                    onChange={event => this.handleRemuneration(event)}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     className="form-control"
-                    type="text"
-                    placeholder="Url de votre page web qui décrit le service"
-                    value={this.state.url}
-                    onChange={event => this.handleUrl(event)}
+                    type="email"
+                    placeholder="Email de contact"
+                    value={this.state.email_contact}
+                    onChange={event => this.handleEmailContact(event)}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="number"
+                    placeholder="Telephone de contact"
+                    value={this.state.telephone_contact}
+                    onChange={event => this.handleTelephoneContact(event)}
                   />
                 </div>
                 <div className="form-group">
@@ -195,7 +238,7 @@ class AddJob extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    categoriesAnnonce: state.categorieAnnonce.categoriesAnnonce,
+    contratsTravail: state.contratTravail.contratsTravail,
     jobs: state.jobs.jobs,
     token: state.auth.token,
   };

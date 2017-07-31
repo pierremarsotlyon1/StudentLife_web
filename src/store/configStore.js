@@ -8,6 +8,7 @@ import entreprise from '../reducers/entreprise';
 import annonce from '../reducers/annonce';
 import categorieAnnonce from '../reducers/categorieAnnonce';
 import jobs from '../reducers/jobs';
+import contratTravail from '../reducers/contratTravail';
 
 import reduxReset from 'redux-reset'
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers(
     annonce,
     categorieAnnonce,
     jobs,
+    contratTravail,
   }
 );
 

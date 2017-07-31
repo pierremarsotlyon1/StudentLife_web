@@ -6,7 +6,7 @@ const rootRoute = {
 
   getComponents(nextState, callback) {
     require.ensure([], function (require) {
-      callback(null, require('../../../components/annonce/AddAnnonce').default);
+      callback(null, require('../../../components/jobs/AddJob').default);
     })
   }
 };
