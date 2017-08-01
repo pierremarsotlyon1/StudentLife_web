@@ -62,15 +62,15 @@ class AddJob extends React.Component {
   };
 
   handleRemuneration = (e) => {
-    let reduction = e.target.value;
-    reduction = Number.parseInt(reduction);
+    let remuneration = e.target.value;
+    remuneration = Number.parseInt(remuneration);
 
-    if (reduction < 0) {
-      reduction = 0;
+    if (remuneration < 0) {
+      remuneration = 0;
     }
 
     this.setState({
-      remuneration: reduction,
+      remuneration: remuneration,
     });
   };
 
@@ -92,7 +92,7 @@ class AddJob extends React.Component {
     });
   };
 
-  handleIdTypeContact= (e) => {
+  handleIdTypeContact = (e) => {
     this.setState({
       id_type_contrat: e.target.value,
     });
@@ -184,6 +184,7 @@ class AddJob extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Date de début de contrat</label>
                   <input
                     className="form-control"
                     type="date"
@@ -193,6 +194,7 @@ class AddJob extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label>Rémunération</label>
                   <input
                     className="form-control"
                     type="number"
