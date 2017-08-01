@@ -58,7 +58,10 @@ export default function annonce(state = initialState, action = {}){
 
     case LOAD_ANNONCE_SUCCESS:
       if(!action.bons_plans){
-        return state;
+        return {
+          ...state,
+          annonces: [],
+        };
       }
 
       return {

@@ -22,9 +22,7 @@ class AnnonceList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.annonces.length === 0) {
-      this.props.dispatch(loadAnnonce(this.state.offset));
-    }
+    this.props.dispatch(loadAnnonce(this.state.offset));
   }
 
   render() {

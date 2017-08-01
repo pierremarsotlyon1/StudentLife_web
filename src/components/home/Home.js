@@ -51,7 +51,7 @@ class Home extends React.Component {
                 <h1 className="display-4">Attirez les étudiants lyonnais !</h1>
                 <br/>
                 <h4 className="fw-200">
-                  Publiez des offres gratuitement que
+                  Publiez des annonces et offres d'emploi <span className="mark-border"> gratuitement </span> que
                   <span className="mark-border"> tous </span>
                   les étudiants pourront consulter.
                 </h4>
@@ -129,8 +129,8 @@ class Home extends React.Component {
                 <div className="col-6 col-md-4 col-xl-3">
                   <div className="card card-bordered card-hover-shadow text-center">
                     <a className="card-block" href="#">
-                      <p><i className="icon-happy fs-50"></i></p>
-                      <h5 className="card-title">Etudiants</h5>
+                      <p><i className="icon-paperclip fs-50"></i></p>
+                      <h5 className="card-title">Offres d'emploi</h5>
                     </a>
                   </div>
                 </div>

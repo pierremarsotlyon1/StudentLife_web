@@ -73,8 +73,7 @@ class Menu extends React.Component {
           <div className="topbar-left">
             <button className="topbar-toggler">&#9776;</button>
             <Link to="/" className="topbar-brand">
-              <img className="logo-default" src="/assets/img/logo.png" alt="logo"/>
-              <img className="logo-inverse" src="/assets/img/logo.png" alt="logo"/>
+              <h3><strong>Estudy</strong></h3>
             </Link>
           </div>
           <div className="topbar-right">

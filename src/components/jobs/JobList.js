@@ -22,9 +22,7 @@ class JobList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.jobs.length === 0) {
-      this.props.dispatch(loadJobs(this.state.offset));
-    }
+    this.props.dispatch(loadJobs(this.state.offset));
   }
 
   render() {
