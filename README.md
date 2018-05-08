@@ -1,4 +1,3 @@
-# Student Life - server
+# Student Life 
 
-Backend of Student Life
-Developed in Restify - NodeJS
+Web application of Student Life developed in React.js
